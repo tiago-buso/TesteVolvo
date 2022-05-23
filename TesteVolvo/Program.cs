@@ -1,7 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using TesteVolvo.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//                options.UseInMemoryDatabase("InMem"));
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
