@@ -21,6 +21,26 @@ namespace TesteVolvo.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("TesteVolvo.Models.BaseTruckModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)")
+                        .HasColumnName("Description");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BaseTruckModel");
+                });
+
             modelBuilder.Entity("TesteVolvo.Models.Truck", b =>
                 {
                     b.Property<int>("Id")
@@ -53,17 +73,16 @@ namespace TesteVolvo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)")
-                        .HasColumnName("Description");
+                    b.Property<int>("BaseTruckModelId")
+                        .HasColumnType("int");
 
                     b.Property<int>("YearOfModel")
                         .HasColumnType("int")
                         .HasColumnName("YearOfModel");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BaseTruckModelId");
 
                     b.ToTable("TruckModel");
                 });
@@ -77,6 +96,22 @@ namespace TesteVolvo.Migrations
                         .IsRequired();
 
                     b.Navigation("TruckModel");
+                });
+
+            modelBuilder.Entity("TesteVolvo.Models.TruckModel", b =>
+                {
+                    b.HasOne("TesteVolvo.Models.BaseTruckModel", "BaseTruckModel")
+                        .WithMany("TruckModels")
+                        .HasForeignKey("BaseTruckModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BaseTruckModel");
+                });
+
+            modelBuilder.Entity("TesteVolvo.Models.BaseTruckModel", b =>
+                {
+                    b.Navigation("TruckModels");
                 });
 
             modelBuilder.Entity("TesteVolvo.Models.TruckModel", b =>

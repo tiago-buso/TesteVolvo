@@ -9,15 +9,6 @@ namespace TesteVolvo.Data
         {
         }       
 
-        //protected override void OnModelCreating(Modelbuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Company>()
-        //        .HasMany(c => c.Employees)
-        //        .WithOne(e => e.Company).
-        
-        //        .IsRequired();
-        //}
-
         public DbSet<Truck> Trucks { get; set; }
         public DbSet<TruckModel> TruckModels { get; set; }
 
