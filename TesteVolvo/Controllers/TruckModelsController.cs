@@ -69,7 +69,12 @@ namespace TesteVolvo.Controllers
 
             var truckModel = _truckModelService.GetTruckModelById(id);
             bool sucesso = _truckModelService.DeleteTruckModel(truckModel);
-            WriteSuccessMessage("Modelo excluído com sucesso");
+
+            if (sucesso)
+            {
+                WriteSuccessMessage("Modelo excluído com sucesso");
+            }
+            
             return RedirectToAction(nameof(Index));
         }       
     }
