@@ -18,5 +18,25 @@ namespace TesteVolvo.Controllers
             IEnumerable<TruckModelReadDto> truckModels = _truckModelService.GetAllTruckModels();
             return View(truckModels);
         }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var truckModel = _truckModelService.GetTruckModelById(id.Value);
+
+            if (truckModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(truckModel);
+        }
+        
+
+
     }
 }
