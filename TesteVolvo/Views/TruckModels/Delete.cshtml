@@ -1,0 +1,37 @@
+﻿@using TesteVolvo.DTOs
+@model TruckModelReadDto
+
+@{
+    ViewData["Title"] = "Excluir um modelo de caminhão";
+}
+
+<h1>Excluir um modelo de caminhão</h1>
+
+<h3>Você tem certeza que quer excluir esse modelo?</h3>
+<div>
+    <hr />
+    <dl class="row">
+       <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BaseTruckModelReadDto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BaseTruckModelReadDto.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.YearOfModel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.YearOfModel)
+        </dd>       
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3 form-group text-end">
+               @Html.ActionLink("Voltar", "Index", "TruckModels" , null,  htmlAttributes: new {@class="btn btn-secondary"})     
+            <input type="submit" value="Excluir" class="btn btn-danger" />         
+        </div>        
+     
+    </form>
+</div>

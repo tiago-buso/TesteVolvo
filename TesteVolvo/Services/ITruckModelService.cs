@@ -6,5 +6,7 @@ namespace TesteVolvo.Services
     {
         IEnumerable<TruckModelReadDto> GetAllTruckModels();
         TruckModelReadDto GetTruckModelById(int id);
+        bool DeleteTruckModel(TruckModelReadDto truckModelReadDto);
+        bool CheckIfCanDeleteTruckModel(int truckModelId);
     }
 }

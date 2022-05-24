@@ -19,7 +19,12 @@ namespace TesteVolvo.Data
 
         public TruckModel GetTruckModelById(int id)
         {
-            return _context.TruckModels.Include("BaseTruckModel").FirstOrDefault(x => x.Id == id);
+            var truckModel = _context.TruckModels.Include("BaseTruckModel").FirstOrDefault(x => x.Id == id);
+            if (truckModel != null)
+            {
+                _context.Entry(truckModel).State = EntityState.Detached;
+            }
+            return truckModel;
         }
 
         public void CreateTruckModel(TruckModel truckModel)

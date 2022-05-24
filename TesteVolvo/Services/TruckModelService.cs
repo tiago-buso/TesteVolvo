@@ -8,11 +8,13 @@ namespace TesteVolvo.Services
     public class TruckModelService : ITruckModelService
     {
         private readonly ITruckModelRepository _truckModelRepository;
+        private readonly ITruckRepository _truckRepository;
         private readonly IMapper _mapper;
 
-        public TruckModelService(ITruckModelRepository truckModelRepository, IMapper mapper)
+        public TruckModelService(ITruckModelRepository truckModelRepository, ITruckRepository truckRepository, IMapper mapper)
         {
             _truckModelRepository = truckModelRepository;
+            _truckRepository = truckRepository;
             _mapper = mapper;
         }
 
@@ -60,6 +62,38 @@ namespace TesteVolvo.Services
             return truckModel != null;
         }
 
+        public bool DeleteTruckModel(TruckModelReadDto truckModelReadDto)
+        {
+            TruckModel truckModel = ConvertTruckModelReadDtolInTruckMode(truckModelReadDto);
+
+            if (truckModel != null)
+            {
+                _truckModelRepository.DeleteTruckModel(truckModel);
+                return _truckModelRepository.SaveChanges();
+            }            
+
+            return false;
+        }
+
+        private TruckModel ConvertTruckModelReadDtolInTruckMode(TruckModelReadDto truckModelReadDto)
+        {
+            if (CheckIfExistsTruckModelReadDto(truckModelReadDto))
+            {
+                return _mapper.Map<TruckModel>(truckModelReadDto);
+            }
+
+            return null;
+        }
+
+        private bool CheckIfExistsTruckModelReadDto(TruckModelReadDto truckModelReadDto)
+        {
+            return truckModelReadDto != null;
+        }
+
+        public bool CheckIfCanDeleteTruckModel(int truckModelId)
+        {
+            return _truckRepository.GetCountOfTrucksWithSpecificTruckModel(truckModelId) == 0;
+        }
 
         //public bool UpdateTruckModel(TruckModelViewModel truckModelViewModel)
         //{
@@ -82,10 +116,6 @@ namespace TesteVolvo.Services
         //    return _mapper.Map<TruckModel>(truckModelViewModel);
         //}
 
-        //public async Task Excluir(Models.ViewModels.AnuncioViewModel anuncioViewModel)
-        //{
-        //    Models.Anuncios.Anuncio anuncio = ConverterViewModelParaModelo(anuncioViewModel);
-        //    await _anunciosRepository.Excluir(anuncio);
-        //}
+
     }
 }

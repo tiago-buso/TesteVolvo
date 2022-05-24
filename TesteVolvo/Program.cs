@@ -1,3 +1,4 @@
+using AspNetCoreHero.ToastNotification;
 using Microsoft.EntityFrameworkCore;
 using TesteVolvo.Data;
 using TesteVolvo.Services;
@@ -20,7 +21,9 @@ builder.Services.AddScoped<ITruckModelService, TruckModelService>();
 
 builder.Services.AddScoped<IBaseTruckModelRepository, BaseTruckModelRepository>();
 builder.Services.AddScoped<ITruckModelRepository, TruckModelRepository>();
+builder.Services.AddScoped<ITruckRepository, TruckRepository>();
 
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
