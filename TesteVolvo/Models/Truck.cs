@@ -12,10 +12,10 @@ namespace TesteVolvo.Models
 
         public TruckModel TruckModel { get; private set; }
 
-        [Required(ErrorMessage = "Please inform the model of the truck")]
+        [Required]
         public int TruckModelId { get; private set; }
 
-        [Required(ErrorMessage =  "Please inform the year of manufacture")]
+        [Required]
         [Column("YearOfManufacture")]
         public int YearOfManufacture { get; private set; }
 

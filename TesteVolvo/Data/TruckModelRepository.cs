@@ -1,4 +1,5 @@
-﻿using TesteVolvo.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TesteVolvo.Models;
 
 namespace TesteVolvo.Data
 {
@@ -13,7 +14,7 @@ namespace TesteVolvo.Data
 
         public IEnumerable<TruckModel> GetAllTruckModels()
         {
-            return _context.TruckModels.ToList();
+            return _context.TruckModels.Include("BaseTruckModel").ToList();
         }
 
         public TruckModel GetTruckModelById(int id)

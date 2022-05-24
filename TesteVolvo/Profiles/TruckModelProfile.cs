@@ -8,10 +8,10 @@ namespace TesteVolvo.Profiles
     {
         public TruckModelProfile()
         {
-            // Source - Targert
+            // Source - Target
 
-            CreateMap<TruckModel, TruckModelReadDto>();
-            CreateMap<TruckModelCreateDto, TruckModel>();
+            CreateMap<TruckModel, TruckModelReadDto>().ForMember(dest => dest.BaseTruckModelReadDto, o => o.MapFrom(src => src.BaseTruckModel ));
+            CreateMap<TruckModelCreateDto, TruckModel>().ForMember(dest => dest.BaseTruckModel, o => o.MapFrom(src => src.BaseTruckModelReadDto));
         }
     }
 }

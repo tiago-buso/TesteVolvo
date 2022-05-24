@@ -1,0 +1,63 @@
+﻿@using TesteVolvo.DTOs
+@model IEnumerable<TruckModelReadDto>
+
+@{
+    ViewData["Title"] = "Modelos de caminhões";
+}
+
+<h1>Modelos de caminhões</h1>
+
+<div class="form-group text-end">
+    @Html.ActionLink("Criar um novo modelo de caminhão", "Create", "TruckModels" , null, htmlAttributes: new {@class="btn btn-primary"})   
+</div>
+
+<br />
+<br />
+ 
+@if(Model != null && Model.Any())
+{
+    <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BaseTruckModelReadDto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearOfModel)
+            </th>
+            <th>          
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BaseTruckModelReadDto.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearOfModel)
+            </td>           
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+            </td>
+        </tr>
+    }
+
+    </tbody>
+    </table>
+
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+             <div class="alert alert-warning mb-3" role="alert">
+                Não foi encontrado registros de modelos de caminhões
+            </div>
+        </div>
+    </div>
+  
+}

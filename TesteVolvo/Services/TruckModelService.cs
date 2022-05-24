@@ -5,7 +5,7 @@ using TesteVolvo.DTOs;
 
 namespace TesteVolvo.Services
 {
-    public class TruckModelService
+    public class TruckModelService : ITruckModelService
     {
         private readonly ITruckModelRepository _truckModelRepository;
         private readonly IMapper _mapper;
@@ -69,7 +69,7 @@ namespace TesteVolvo.Services
         //        _truckModelRepository.UpdateTruckModel(truckModel);
         //        return _truckModelRepository.SaveChanges();
         //    }
-            
+
         //}
 
         //private bool IsValidTruckModelViewModel(TruckModelViewModel truckModelViewModel)

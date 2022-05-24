@@ -10,8 +10,8 @@ namespace TesteVolvo.Models
         [Column("Id")]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Please inform the description of the truck model")]
-        [MaxLength(2, ErrorMessage = "Please inform only 2 chars in the description field")]
+        [Required]
+        [MaxLength(2)]
         [Column("Description")]
         public string Description { get; set; }
 

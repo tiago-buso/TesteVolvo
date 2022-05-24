@@ -11,6 +11,7 @@ namespace TesteVolvo.Data
 
         public DbSet<Truck> Trucks { get; set; }
         public DbSet<TruckModel> TruckModels { get; set; }
+        public DbSet<BaseTruckModel> BaseTruckModels { get; set; }
 
     }
 }

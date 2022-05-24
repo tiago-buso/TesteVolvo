@@ -12,27 +12,14 @@ namespace TesteVolvo.Models
        
         public BaseTruckModel BaseTruckModel { get; private set; }
 
-        [Required(ErrorMessage = "Please inform the base truck model of the truck")]
+        [Required]
         public int BaseTruckModelId { get; private set; }
 
-        [Required(ErrorMessage = "Please inform the year of the truck model")]
+        [Required]
         [Column("YearOfModel")]
         public int YearOfModel { get; private set; }
 
-        public ICollection<Truck> Trucks { get; private set; }
-
-        public TruckModel(int baseTruckModelId, int yearOfModel)
-        {
-            BaseTruckModelId = baseTruckModelId;
-            YearOfModel = yearOfModel;
-        }
-
-        public TruckModel(int id, int baseTruckModelId, int yearOfModel)
-        {
-            Id = id;
-            BaseTruckModelId = baseTruckModelId;
-            YearOfModel = yearOfModel;
-        }
+        public ICollection<Truck> Trucks { get; private set; }       
 
     }
 }

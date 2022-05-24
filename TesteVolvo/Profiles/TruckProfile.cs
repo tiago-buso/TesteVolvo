@@ -8,7 +8,7 @@ namespace TesteVolvo.Profiles
     {
         public TruckProfile()
         {
-            // Source - Targert
+            // Source - Target
 
             //CreateMap<Truck, TruckViewModel>();
             //CreateMap<TruckViewModel, Truck>();
