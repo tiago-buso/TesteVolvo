@@ -1,4 +1,5 @@
-﻿using TesteVolvo.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TesteVolvo.Models;
 
 namespace TesteVolvo.Data
 {
@@ -13,12 +14,19 @@ namespace TesteVolvo.Data
 
         public IEnumerable<BaseTruckModel> GetAllBaseTruckModels()
         {
-            return _context.BaseTruckModels.ToList();
+            return _context.BaseTruckModels.AsNoTracking().ToList();
         }
 
         public BaseTruckModel GetBaseTruckModelById(int id)
         {
-            return _context.BaseTruckModels.FirstOrDefault(x => x.Id == id);
+            var baseTruckModel =  _context.BaseTruckModels.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            if (baseTruckModel != null)
+            {
+                _context.Entry(baseTruckModel).State = EntityState.Detached;
+            }
+
+            return baseTruckModel;
+
         }
     }
 }
