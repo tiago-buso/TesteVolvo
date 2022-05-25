@@ -95,27 +95,32 @@ namespace TesteVolvo.Services
             return _truckRepository.GetCountOfTrucksWithSpecificTruckModel(truckModelId) == 0;
         }
 
-        //public bool UpdateTruckModel(TruckModelViewModel truckModelViewModel)
-        //{
-        //    if (IsValidTruckModelViewModel(truckModelViewModel))
-        //    {
-        //        TruckModel truckModel = ConvertTruckModelViewModelInTruckModel(truckModelViewModel);
-        //        _truckModelRepository.UpdateTruckModel(truckModel);
-        //        return _truckModelRepository.SaveChanges();
-        //    }
+        public bool CreateTruckModel(TruckModelCreateDto truckModelCreateDto)
+        {
+            TruckModel truckModel = ConvertTruckModelCreateDtoInTruckMode(truckModelCreateDto);
 
-        //}
+            if (truckModel != null)
+            {
+                _truckModelRepository.CreateTruckModel(truckModel);
+                return _truckModelRepository.SaveChanges();
+            }
 
-        //private bool IsValidTruckModelViewModel(TruckModelViewModel truckModelViewModel)
-        //{
-        //    throw new NotImplementedException();
-        //}
+            return false;
+        }
 
-        //private TruckModel ConvertTruckModelViewModelInTruckModel(TruckModelViewModel truckModelViewModel)
-        //{
-        //    return _mapper.Map<TruckModel>(truckModelViewModel);
-        //}
+        private TruckModel ConvertTruckModelCreateDtoInTruckMode(TruckModelCreateDto truckModelCreateDto)
+        {
+            if (CheckIfExistsTruckModelCreateDto(truckModelCreateDto))
+            {
+                return _mapper.Map<TruckModel>(truckModelCreateDto);
+            }
 
+            return null;
+        }
 
+        private bool CheckIfExistsTruckModelCreateDto(TruckModelCreateDto truckModelCreateDto)
+        {
+            return truckModelCreateDto != null;
+        }
     }
 }

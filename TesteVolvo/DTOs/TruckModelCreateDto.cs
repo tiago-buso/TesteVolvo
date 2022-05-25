@@ -4,35 +4,50 @@ using System.ComponentModel.DataAnnotations;
 namespace TesteVolvo.DTOs
 {
     public class TruckModelCreateDto : Notifiable<Notification>
-    {              
-
+    {
         [Display(Name = "Modelo base")]
-        public BaseTruckModelReadDto BaseTruckModelReadDto { get; private set; }
+        public IEnumerable<BaseTruckModelReadDto> ListBaseTruckModelReadDto { get; set; }   
+        
+        [Display(Name = "Modelo base")]
+        public int BaseTruckModelReadDtoId { get; set; }
 
         [Display(Name = "Ano do Modelo")]
-        public int YearOfModel { get; private set; }
+        public int YearOfModel { get; set; }
 
-        public TruckModelCreateDto(BaseTruckModelReadDto baseTruckModelReadDto, int yearOfModel)
+        public TruckModelCreateDto() { }
+
+        public TruckModelCreateDto(IEnumerable<BaseTruckModelReadDto> listBaseTruckModelReadDto) 
         {
-            Validate(baseTruckModelReadDto, yearOfModel);
+            ValidateListBaseTruckModel(listBaseTruckModelReadDto);
 
             if (this.IsValid)
             {
-                BaseTruckModelReadDto = baseTruckModelReadDto;
-                YearOfModel = yearOfModel;
+                ListBaseTruckModelReadDto = listBaseTruckModelReadDto;
             }
         }
 
-        private void Validate(BaseTruckModelReadDto baseTruckModelReadDto, int yearOfModel)
+        public void Validate()
         {
-            if (baseTruckModelReadDto == null || (baseTruckModelReadDto != null && string.IsNullOrEmpty(baseTruckModelReadDto.Description)))
+            if (BaseTruckModelReadDtoId == 0)
             {
                 AddNotification("baseTruckModelReadDto", "Por favor, selecione um modelo base válido");
             }
 
-            if (yearOfModel < DateTime.Now.Year)
+            if (YearOfModel < DateTime.Now.Year)
             {
-                AddNotification("yearOfModel", "O ano do modelo não pode ser menor que o ano atual. Por favor, informe um ano do modelo válido.");
+                AddNotification("yearOfModelMin", "O ano do modelo não pode ser menor que o ano atual. Por favor, informe um ano do modelo válido.");
+            }
+            else if (YearOfModel > DateTime.Now.AddYears(1).Year)
+            {
+                AddNotification("yearOfModelMax", "O ano do modelo não pode ser maior que o ano que vem. Por favor, informe um ano do modelo válido.");
+            }            
+        }
+
+        private void ValidateListBaseTruckModel(IEnumerable<BaseTruckModelReadDto> listBaseTruckModelReadDto)
+        {
+            if (listBaseTruckModelReadDto == null || (listBaseTruckModelReadDto != null && !listBaseTruckModelReadDto.Any()))
+            {
+                AddNotification("listBaseTruckModelReadDto", "Não foi encontrado a lista de modelos base de caminhão");
             }
         }
     }

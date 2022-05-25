@@ -26,5 +26,27 @@ namespace TesteVolvo.Controllers.Base
         {
             _notyf.Error(message);
         }
+
+        protected void WriteErrorMultipleNotifications(IReadOnlyCollection<Flunt.Notifications.Notification> notifications)
+        {
+            string finalMessage = string.Empty;
+            int messageCount = 1;
+
+            foreach (var notification in notifications)
+            {
+                if (messageCount == 1)
+                {
+                    finalMessage += $"{notification.Message}";
+                }
+                else
+                {
+                    finalMessage += $"\n{notification.Message}";
+                }
+
+                messageCount ++;
+            }
+
+            _notyf.Error(finalMessage);
+        }
     }
 }

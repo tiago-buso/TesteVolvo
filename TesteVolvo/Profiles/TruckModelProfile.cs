@@ -12,7 +12,7 @@ namespace TesteVolvo.Profiles
 
             CreateMap<TruckModel, TruckModelReadDto>().ForMember(dest => dest.BaseTruckModelReadDto, o => o.MapFrom(src => src.BaseTruckModel ));
             CreateMap<TruckModelReadDto, TruckModel>();
-            CreateMap<TruckModelCreateDto, TruckModel>().ForMember(dest => dest.BaseTruckModel, o => o.MapFrom(src => src.BaseTruckModelReadDto));
+            CreateMap<TruckModelCreateDto, TruckModel>().ForMember(dest => dest.BaseTruckModelId, o => o.MapFrom(src => src.BaseTruckModelReadDtoId));
         }
     }
 }

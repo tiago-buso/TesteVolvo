@@ -10,12 +10,13 @@ namespace TesteVolvo.Controllers
     {
         private readonly ITruckModelService _truckModelService;
         private readonly INotyfService _notyf;
+        private readonly IBaseTruckModelService _baseTruckModelService;
 
-
-        public TruckModelsController(ITruckModelService truckModelService, INotyfService notyf) : base(notyf)
+        public TruckModelsController(ITruckModelService truckModelService, INotyfService notyf, IBaseTruckModelService baseTruckModelService) : base(notyf)
         {
             _truckModelService = truckModelService;
             _notyf = notyf;
+            _baseTruckModelService = baseTruckModelService;
         }
 
         public IActionResult Index()
@@ -41,7 +42,7 @@ namespace TesteVolvo.Controllers
             return View(truckModel);
         }
 
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -59,7 +60,7 @@ namespace TesteVolvo.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             if (!_truckModelService.CheckIfCanDeleteTruckModel(id))
             {
@@ -76,6 +77,62 @@ namespace TesteVolvo.Controllers
             }
             
             return RedirectToAction(nameof(Index));
-        }       
+        }
+    
+        public IActionResult Create()
+        {            
+            TruckModelCreateDto truckModelCreateDto = CreateTruckModelCreateDtoObjectForCreateView();          
+
+            if (!truckModelCreateDto.IsValid)
+            {
+                WriteErrorMessage(truckModelCreateDto.Notifications.First(x => x.Key == "listBaseTruckModelReadDto").Message);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(truckModelCreateDto);
+        }
+
+        private TruckModelCreateDto CreateTruckModelCreateDtoObjectForCreateView()
+        {
+            var baseTruckModelList = _baseTruckModelService.GetAllBaseTruckModels();
+            TruckModelCreateDto truckModelCreateDto = new TruckModelCreateDto(baseTruckModelList);          
+            return truckModelCreateDto;
+        }      
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("BaseTruckModelReadDtoId,YearOfModel")] TruckModelCreateDto truckModelCreateDto)
+        {
+            if (ValidateTruckModelCreateDto(truckModelCreateDto))
+            {
+                if (_truckModelService.CreateTruckModel(truckModelCreateDto))
+                {
+                    WriteSuccessMessage("Modelo de caminhão criado com sucesso");
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    WriteErrorMessage("Foi encontrado um erro criar um modelo de caminhão");
+                    return Create();
+                }                
+            }
+            else
+            {
+                return Create();
+            }
+            
+        }
+
+        private bool ValidateTruckModelCreateDto(TruckModelCreateDto truckModelCreateDto)
+        {
+            truckModelCreateDto.Validate();
+            if (!truckModelCreateDto.IsValid)
+            {
+                WriteErrorMultipleNotifications(truckModelCreateDto.Notifications);
+                return false;
+            }
+
+            return true;
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace TesteVolvo.Services
         TruckModelReadDto GetTruckModelById(int id);
         bool DeleteTruckModel(TruckModelReadDto truckModelReadDto);
         bool CheckIfCanDeleteTruckModel(int truckModelId);
+        bool CreateTruckModel(TruckModelCreateDto truckModelCreateDto);
     }
 }
