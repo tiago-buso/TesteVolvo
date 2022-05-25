@@ -117,6 +117,10 @@ namespace TesteVolvo.Controllers
                 {
                     WriteSuccessMessage("Modelo excluído com sucesso");
                 }
+                else
+                {
+                    WriteErrorMessage($"Ocorreu erro ao excluir este modelo de caminhão");
+                }
 
                 return RedirectToAction(nameof(Index));
             }
