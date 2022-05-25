@@ -1,5 +1,5 @@
 ﻿@using TesteVolvo.DTOs
-@model TruckModelReadDto
+@model TruckModelDto
 @{
     ViewData["Title"] = "Detalhes de modelos de caminhões";
 }
@@ -10,10 +10,10 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BaseTruckModelReadDto)
+            @Html.DisplayNameFor(model => model.BaseTruckModelDto)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BaseTruckModelReadDto.Description)
+            @Html.DisplayFor(model => model.BaseTruckModelDto.Description)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.YearOfModel)

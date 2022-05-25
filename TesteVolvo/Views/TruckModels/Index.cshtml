@@ -1,5 +1,5 @@
 ﻿@using TesteVolvo.DTOs
-@model IEnumerable<TruckModelReadDto>
+@model IEnumerable<TruckModelDto>
 
 @{
     ViewData["Title"] = "Modelos de caminhões";
@@ -20,7 +20,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BaseTruckModelReadDto)
+                @Html.DisplayNameFor(model => model.BaseTruckModelDto)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.YearOfModel)
@@ -33,7 +33,7 @@
     @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.BaseTruckModelReadDto.Description)
+                @Html.DisplayFor(modelItem => item.BaseTruckModelDto.Description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.YearOfModel)

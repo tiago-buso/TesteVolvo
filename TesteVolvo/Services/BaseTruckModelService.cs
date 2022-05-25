@@ -16,18 +16,18 @@ namespace TesteVolvo.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<BaseTruckModelReadDto> GetAllBaseTruckModels()
+        public IEnumerable<BaseTruckModelDto> GetAllBaseTruckModels()
         {
             IEnumerable<BaseTruckModel> baseTruckModels = _baseTruckModelRepository.GetAllBaseTruckModels();
 
             return ConvertBaseTruckModelsInBaseTruckModelReadDtos(baseTruckModels);
         }
 
-        private IEnumerable<BaseTruckModelReadDto> ConvertBaseTruckModelsInBaseTruckModelReadDtos(IEnumerable<BaseTruckModel> baseTruckModels)
+        private IEnumerable<BaseTruckModelDto> ConvertBaseTruckModelsInBaseTruckModelReadDtos(IEnumerable<BaseTruckModel> baseTruckModels)
         {
             if (CheckIfExistsAnyBaseTruckModels(baseTruckModels))
             {
-                return _mapper.Map<IEnumerable<BaseTruckModelReadDto>>(baseTruckModels);
+                return _mapper.Map<IEnumerable<BaseTruckModelDto>>(baseTruckModels);
             }
 
             return null;
@@ -38,18 +38,18 @@ namespace TesteVolvo.Services
             return baseTruckModels != null && baseTruckModels.Any();
         }
 
-        public BaseTruckModelReadDto GetBaseTruckModelById(int id)
+        public BaseTruckModelDto GetBaseTruckModelById(int id)
         {
             BaseTruckModel baseTruckModel = _baseTruckModelRepository.GetBaseTruckModelById(id);
 
             return ConvertBaseTruckModelInBaseTruckModelReadDto(baseTruckModel);
         }
 
-        private BaseTruckModelReadDto ConvertBaseTruckModelInBaseTruckModelReadDto(BaseTruckModel baseTruckModel)
+        private BaseTruckModelDto ConvertBaseTruckModelInBaseTruckModelReadDto(BaseTruckModel baseTruckModel)
         {
             if (CheckIfExistsBaseTruckModel(baseTruckModel))
             {
-                return _mapper.Map<BaseTruckModelReadDto>(baseTruckModel);
+                return _mapper.Map<BaseTruckModelDto>(baseTruckModel);
             }
 
             return null;

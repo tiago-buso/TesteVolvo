@@ -4,7 +4,7 @@ namespace TesteVolvo.Services
 {
     public interface IBaseTruckModelService
     {
-        IEnumerable<BaseTruckModelReadDto> GetAllBaseTruckModels();
-        BaseTruckModelReadDto GetBaseTruckModelById(int id);
+        IEnumerable<BaseTruckModelDto> GetAllBaseTruckModels();
+        BaseTruckModelDto GetBaseTruckModelById(int id);
     }
 }

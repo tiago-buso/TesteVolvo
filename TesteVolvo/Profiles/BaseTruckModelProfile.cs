@@ -10,8 +10,8 @@ namespace TesteVolvo.Profiles
         {
             // Source - Target
 
-            CreateMap<BaseTruckModel, BaseTruckModelReadDto>();
-            CreateMap<BaseTruckModelReadDto, BaseTruckModel>();
+            CreateMap<BaseTruckModel, BaseTruckModelDto>();
+            CreateMap<BaseTruckModelDto, BaseTruckModel>();
         }
     }
 }

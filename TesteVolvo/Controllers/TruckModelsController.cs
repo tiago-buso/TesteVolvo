@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TesteVolvo.Controllers.Base;
 using TesteVolvo.DTOs;
@@ -21,118 +22,264 @@ namespace TesteVolvo.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<TruckModelReadDto> truckModels = _truckModelService.GetAllTruckModels();
-            return View(truckModels);
+            try
+            {
+                IEnumerable<TruckModelDto> truckModels = _truckModelService.GetAllTruckModels();
+                return View(truckModels);
+            }
+            catch (AutoMapperMappingException autoMapperException)
+            {
+                WriteErrorMessage($"Ocorreu erro ao realizar o mapeamento dos modelos de caminhão: {autoMapperException.Message}");
+                return RedirectToAction(nameof(Index), nameof(HomeController));
+            }
+            catch (Exception ex)
+            {
+                WriteErrorMessage($"Ocorreu erro ao carregar todos os modelos de caminhão: {ex.Message}");
+                return RedirectToAction(nameof(Index), nameof(HomeController));
+            }
         }
 
         public IActionResult Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var truckModel = _truckModelService.GetTruckModelById(id.Value);
+
+                if (truckModel == null)
+                {
+                    return NotFound();
+                }
+
+                return View(truckModel);
             }
-
-            var truckModel = _truckModelService.GetTruckModelById(id.Value);
-
-            if (truckModel == null)
+            catch (AutoMapperMappingException autoMapperException)
             {
-                return NotFound();
+                WriteErrorMessage($"Ocorreu erro ao realizar o mapeamento dos modelos de caminhão: {autoMapperException.Message}");
+                return RedirectToAction(nameof(Index));
             }
-
-            return View(truckModel);
+            catch (Exception ex)
+            {
+                WriteErrorMessage($"Ocorreu erro ao carregar os detalhes de modelo de caminhão: {ex.Message}");
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         public IActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var truckModel = _truckModelService.GetTruckModelById(id.Value);
-            if (truckModel == null)
+                var truckModel = _truckModelService.GetTruckModelById(id.Value);
+                if (truckModel == null)
+                {
+                    return NotFound();
+                }
+
+                return View(truckModel);
+            }
+            catch (AutoMapperMappingException autoMapperException)
             {
-                return NotFound();
+                WriteErrorMessage($"Ocorreu erro ao realizar o mapeamento dos modelos de caminhão: {autoMapperException.Message}");
+                return RedirectToAction(nameof(Index));
             }
-
-            return View(truckModel);
+            catch (Exception ex)
+            {
+                WriteErrorMessage($"Ocorreu erro ao carregar os detalhes de modelo de caminhão: {ex.Message}");
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            if (!_truckModelService.CheckIfCanDeleteTruckModel(id))
+            try
             {
-                WriteErrorMessage("Não é possível excluir um modelo de caminhão que já tem um caminhão cadastrado");
+                if (!_truckModelService.CheckIfCanDeleteTruckModel(id))
+                {
+                    WriteErrorMessage("Não é possível excluir um modelo de caminhão que já tem um caminhão cadastrado");
+                    return RedirectToAction(nameof(Index));
+                }
+
+                var truckModel = _truckModelService.GetTruckModelById(id);
+                bool sucesso = _truckModelService.DeleteTruckModel(truckModel);
+
+                if (sucesso)
+                {
+                    WriteSuccessMessage("Modelo excluído com sucesso");
+                }
+
                 return RedirectToAction(nameof(Index));
             }
-
-            var truckModel = _truckModelService.GetTruckModelById(id);
-            bool sucesso = _truckModelService.DeleteTruckModel(truckModel);
-
-            if (sucesso)
+            catch (AutoMapperMappingException autoMapperException)
             {
-                WriteSuccessMessage("Modelo excluído com sucesso");
+                WriteErrorMessage($"Ocorreu erro ao realizar o mapeamento dos modelos de caminhão: {autoMapperException.Message}");
+                return RedirectToAction(nameof(Delete));
             }
-            
-            return RedirectToAction(nameof(Index));
+            catch (Exception ex)
+            {
+                WriteErrorMessage($"Ocorreu erro ao excluir este modelo de caminhão: {ex.Message}");
+                return RedirectToAction(nameof(Delete));
+            }
         }
     
         public IActionResult Create()
-        {            
-            TruckModelCreateDto truckModelCreateDto = CreateTruckModelCreateDtoObjectForCreateView();          
-
-            if (!truckModelCreateDto.IsValid)
+        {
+            try
             {
-                WriteErrorMessage(truckModelCreateDto.Notifications.First(x => x.Key == "listBaseTruckModelReadDto").Message);
+                TruckModelDto truckModelDto = new TruckModelDto();
+
+                CreateTruckModelDtoObjectForCreateView(truckModelDto);
+
+                if (!truckModelDto.IsValid)
+                {
+                    WriteErrorMessage(truckModelDto.Notifications.First().Message);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return View(truckModelDto);
+            }
+            catch (AutoMapperMappingException autoMapperException)
+            {
+                WriteErrorMessage($"Ocorreu erro ao realizar o mapeamento dos modelos de caminhão: {autoMapperException.Message}");
                 return RedirectToAction(nameof(Index));
             }
-
-            return View(truckModelCreateDto);
+            catch (Exception ex)
+            {
+                WriteErrorMessage($"Ocorreu erro ao carregar a tela de criação de modelo de caminhão: {ex.Message}");
+                return RedirectToAction(nameof(Index));
+            }
         }
 
-        private TruckModelCreateDto CreateTruckModelCreateDtoObjectForCreateView()
+        private TruckModelDto CreateTruckModelDtoObjectForCreateView(TruckModelDto truckModelDto)
         {
             var baseTruckModelList = _baseTruckModelService.GetAllBaseTruckModels();
-            TruckModelCreateDto truckModelCreateDto = new TruckModelCreateDto(baseTruckModelList);          
-            return truckModelCreateDto;
+            truckModelDto.AddListBaseTruckModelDto(baseTruckModelList);          
+            return truckModelDto;
         }      
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("BaseTruckModelReadDtoId,YearOfModel")] TruckModelCreateDto truckModelCreateDto)
+        public IActionResult Create([Bind("BaseTruckModelDtoId,YearOfModel")] TruckModelDto truckModelDto)
         {
-            if (ValidateTruckModelCreateDto(truckModelCreateDto))
+            try
             {
-                if (_truckModelService.CreateTruckModel(truckModelCreateDto))
-                {
-                    WriteSuccessMessage("Modelo de caminhão criado com sucesso");
-                    return RedirectToAction(nameof(Index));
+                if (ValidateTruckModelDto(truckModelDto))
+                {                  
+
+                    if (_truckModelService.CreateTruckModel(truckModelDto))
+                    {
+                        WriteSuccessMessage("Modelo de caminhão criado com sucesso");
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        WriteErrorMessage("Foi encontrado um erro criar um modelo de caminhão");
+                        return RedirectToAction(nameof(Create));
+                    }
                 }
                 else
                 {
-                    WriteErrorMessage("Foi encontrado um erro criar um modelo de caminhão");
-                    return Create();
-                }                
+                    return RedirectToAction(nameof(Create));
+                }
             }
-            else
+            catch (AutoMapperMappingException autoMapperException)
             {
-                return Create();
+                WriteErrorMessage($"Ocorreu erro ao realizar o mapeamento dos modelos de caminhão: {autoMapperException.Message}");
+                return RedirectToAction(nameof(Create));
             }
-            
+            catch (Exception ex)
+            {
+                WriteErrorMessage($"Ocorreu erro ao criar o modelo de caminhão: {ex.Message}");
+                return RedirectToAction(nameof(Create));
+            }
+
         }
 
-        private bool ValidateTruckModelCreateDto(TruckModelCreateDto truckModelCreateDto)
+        private bool ValidateTruckModelDto(TruckModelDto truckModelDto)
         {
-            truckModelCreateDto.Validate();
-            if (!truckModelCreateDto.IsValid)
+            truckModelDto.Validate();
+            if (!truckModelDto.IsValid)
             {
-                WriteErrorMultipleNotifications(truckModelCreateDto.Notifications);
+                WriteErrorMultipleNotifications(truckModelDto.Notifications);
                 return false;
             }
 
             return true;
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var truckModelDto = _truckModelService.GetTruckModelById(id.Value);
+            if (truckModelDto == null)
+            {
+                return NotFound();
+            }
+
+            CreateTruckModelDtoObjectForCreateView(truckModelDto);
+
+            if (!truckModelDto.IsValid)
+            {
+                WriteErrorMessage(truckModelDto.Notifications.First().Message);
+                return RedirectToAction(nameof(Index));
+            }
+            
+            return View(truckModelDto);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, [Bind("Id,BaseTruckModelDtoId,YearOfModel")] TruckModelDto truckModelDto)
+        {
+            if (id != truckModelDto.Id)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                if (ValidateTruckModelDto(truckModelDto))
+                {
+                    if (_truckModelService.UpdateTruckModel(truckModelDto))
+                    {
+                        WriteSuccessMessage("Modelo de caminhão atualizado com sucesso");
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        WriteErrorMessage("Foi encontrado um erro ao atualizar um modelo de caminhão");
+                        return RedirectToAction(nameof(Edit));
+                    }
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Edit));
+                }
+            }
+            catch (AutoMapperMappingException autoMapperException)
+            {
+                WriteErrorMessage($"Ocorreu erro ao realizar o mapeamento dos modelos de caminhão: {autoMapperException.Message}");
+                return RedirectToAction(nameof(Edit));
+            }
+            catch (Exception ex)
+            {
+                WriteErrorMessage($"Ocorreu erro ao atualizar o modelo de caminhão: {ex.Message}");
+                return RedirectToAction(nameof(Edit));
+            }
         }
     }
 }

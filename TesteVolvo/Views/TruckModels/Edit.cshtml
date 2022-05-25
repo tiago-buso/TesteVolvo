@@ -2,15 +2,16 @@
 @model TruckModelDto
 
 @{
-    ViewData["Title"] = "Criar um novo modelo de caminhão";
+    ViewData["Title"] = "Atualizar um novo modelo de caminhão";
 }
 
-<h1>Criar um novo modelo de caminhão</h1>
+<h1>Atualizar um novo modelo de caminhão</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="Id" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="mb-3">
                 <label asp-for="BaseTruckModelDtoId" class="form-label"></label>                
@@ -25,7 +26,7 @@
 
             <div class="mb-3 form-group text-end">
                 @Html.ActionLink("Voltar", "Index", "TruckModels" , null,  htmlAttributes: new {@class="btn btn-secondary"})                   
-                <input type="submit" value="Criar" class="btn btn-success" />                
+                <input type="submit" value="Atualizar" class="btn btn-success" />                
             </div>
         </form>
     </div>

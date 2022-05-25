@@ -4,10 +4,11 @@ namespace TesteVolvo.Services
 {
     public interface ITruckModelService
     {
-        IEnumerable<TruckModelReadDto> GetAllTruckModels();
-        TruckModelReadDto GetTruckModelById(int id);
-        bool DeleteTruckModel(TruckModelReadDto truckModelReadDto);
+        IEnumerable<TruckModelDto> GetAllTruckModels();
+        TruckModelDto GetTruckModelById(int id);
+        bool DeleteTruckModel(TruckModelDto truckModelDto);
         bool CheckIfCanDeleteTruckModel(int truckModelId);
-        bool CreateTruckModel(TruckModelCreateDto truckModelCreateDto);
+        bool CreateTruckModel(TruckModelDto truckModelDto);
+        bool UpdateTruckModel(TruckModelDto truckModelDto);
     }
 }

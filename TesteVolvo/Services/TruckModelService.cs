@@ -10,61 +10,33 @@ namespace TesteVolvo.Services
         private readonly ITruckModelRepository _truckModelRepository;
         private readonly ITruckRepository _truckRepository;
         private readonly IMapper _mapper;
+        private readonly IMapperTruckModelService _mapperTruckModelService;
 
-        public TruckModelService(ITruckModelRepository truckModelRepository, ITruckRepository truckRepository, IMapper mapper)
+        public TruckModelService(ITruckModelRepository truckModelRepository, ITruckRepository truckRepository, IMapper mapper, IMapperTruckModelService mapperTruckModelService)
         {
             _truckModelRepository = truckModelRepository;
             _truckRepository = truckRepository;
             _mapper = mapper;
+            _mapperTruckModelService = mapperTruckModelService;
         }
 
-        public IEnumerable<TruckModelReadDto> GetAllTruckModels()
+        public IEnumerable<TruckModelDto> GetAllTruckModels()
         {
             IEnumerable<TruckModel> truckModels = _truckModelRepository.GetAllTruckModels();
 
-            return ConvertTruckModelsInTruckModelReadDtos(truckModels);
-        }
+            return _mapperTruckModelService.ConvertTruckModelsInTruckModelDtos(truckModels);
+        }       
 
-        private IEnumerable<TruckModelReadDto> ConvertTruckModelsInTruckModelReadDtos(IEnumerable<TruckModel> truckModels)
-        {
-            if (CheckIfExistsAnyTruckModels(truckModels))
-            {
-                return _mapper.Map<IEnumerable<TruckModelReadDto>>(truckModels);
-            }
-
-            return null;
-        }
-
-        private bool CheckIfExistsAnyTruckModels(IEnumerable<TruckModel> truckModels)
-        {
-            return truckModels != null && truckModels.Any();
-        }
-
-        public TruckModelReadDto GetTruckModelById(int id)
+        public TruckModelDto GetTruckModelById(int id)
         {
             TruckModel truckModel = _truckModelRepository.GetTruckModelById(id);
 
-            return ConvertTruckModelInTruckModelReadDto(truckModel);
-        }
+            return _mapperTruckModelService.ConvertTruckModelInTruckModelDto(truckModel);
+        }        
 
-        private TruckModelReadDto ConvertTruckModelInTruckModelReadDto(TruckModel truckModel)
+        public bool DeleteTruckModel(TruckModelDto TruckModelDto)
         {
-            if (CheckIfExistsTruckModel(truckModel))
-            {
-                return _mapper.Map<TruckModelReadDto>(truckModel);
-            }
-
-            return null;
-        }
-
-        private bool CheckIfExistsTruckModel(TruckModel truckModel)
-        {
-            return truckModel != null;
-        }
-
-        public bool DeleteTruckModel(TruckModelReadDto truckModelReadDto)
-        {
-            TruckModel truckModel = ConvertTruckModelReadDtolInTruckMode(truckModelReadDto);
+            TruckModel truckModel = _mapperTruckModelService.ConvertTruckModelDtoInTruckModel(TruckModelDto);
 
             if (truckModel != null)
             {
@@ -73,54 +45,37 @@ namespace TesteVolvo.Services
             }            
 
             return false;
-        }
-
-        private TruckModel ConvertTruckModelReadDtolInTruckMode(TruckModelReadDto truckModelReadDto)
-        {
-            if (CheckIfExistsTruckModelReadDto(truckModelReadDto))
-            {
-                return _mapper.Map<TruckModel>(truckModelReadDto);
-            }
-
-            return null;
-        }
-
-        private bool CheckIfExistsTruckModelReadDto(TruckModelReadDto truckModelReadDto)
-        {
-            return truckModelReadDto != null;
-        }
+        }       
 
         public bool CheckIfCanDeleteTruckModel(int truckModelId)
         {
             return _truckRepository.GetCountOfTrucksWithSpecificTruckModel(truckModelId) == 0;
         }
 
-        public bool CreateTruckModel(TruckModelCreateDto truckModelCreateDto)
+        public bool CreateTruckModel(TruckModelDto truckModelDto)
         {
-            TruckModel truckModel = ConvertTruckModelCreateDtoInTruckMode(truckModelCreateDto);
+            TruckModel truckModel = _mapperTruckModelService.ConvertTruckModelDtoInTruckModel(truckModelDto);
 
             if (truckModel != null)
             {
-                _truckModelRepository.CreateTruckModel(truckModel);
+                _truckModelRepository.CreateTruckModel(truckModel);            
                 return _truckModelRepository.SaveChanges();
             }
 
             return false;
         }
 
-        private TruckModel ConvertTruckModelCreateDtoInTruckMode(TruckModelCreateDto truckModelCreateDto)
+        public bool UpdateTruckModel(TruckModelDto truckModelDto)
         {
-            if (CheckIfExistsTruckModelCreateDto(truckModelCreateDto))
+            TruckModel truckModel = _mapperTruckModelService.ConvertTruckModelDtoInTruckModel(truckModelDto);
+
+            if (truckModel != null)
             {
-                return _mapper.Map<TruckModel>(truckModelCreateDto);
+                _truckModelRepository.UpdateTruckModel(truckModel);
+                return _truckModelRepository.SaveChanges();
             }
 
-            return null;
-        }
-
-        private bool CheckIfExistsTruckModelCreateDto(TruckModelCreateDto truckModelCreateDto)
-        {
-            return truckModelCreateDto != null;
+            return false;
         }
     }
 }
