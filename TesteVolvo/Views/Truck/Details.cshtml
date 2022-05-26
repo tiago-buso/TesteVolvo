@@ -1,0 +1,29 @@
+﻿@using TesteVolvo.DTOs
+@model TruckDto
+@{
+    ViewData["Title"] = "Detalhes de caminhões";
+}
+
+<h1>Detalhes de caminhões</h1>
+
+<div>   
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TruckModelDto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TruckModelDto.TruckModelFormatted)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.YearOfManufacture)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.YearOfManufacture)
+        </dd>       
+    </dl>
+</div>
+ <div class="mb-3 form-group text-end">
+      @Html.ActionLink("Voltar", "Index", "Truck" , null,  htmlAttributes: new {@class="btn btn-secondary"})                   
+      @Html.ActionLink("Editar", "Edit", "Truck" , new {  id = Model.Id },  htmlAttributes: new {@class="btn btn-primary"})                  
+</div>

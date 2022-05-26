@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using TesteVolvo.Data;
+﻿using TesteVolvo.Data;
 using TesteVolvo.Models;
 using TesteVolvo.DTOs;
 
@@ -9,14 +8,12 @@ namespace TesteVolvo.Services
     {
         private readonly ITruckModelRepository _truckModelRepository;
         private readonly ITruckRepository _truckRepository;
-        private readonly IMapper _mapper;
         private readonly IMapperTruckModelService _mapperTruckModelService;
 
-        public TruckModelService(ITruckModelRepository truckModelRepository, ITruckRepository truckRepository, IMapper mapper, IMapperTruckModelService mapperTruckModelService)
+        public TruckModelService(ITruckModelRepository truckModelRepository, ITruckRepository truckRepository, IMapperTruckModelService mapperTruckModelService)
         {
             _truckModelRepository = truckModelRepository;
-            _truckRepository = truckRepository;
-            _mapper = mapper;
+            _truckRepository = truckRepository;      
             _mapperTruckModelService = mapperTruckModelService;
         }
 

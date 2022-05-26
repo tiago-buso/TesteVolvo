@@ -1,0 +1,40 @@
+﻿@using TesteVolvo.DTOs
+@model TruckDto
+
+@{
+    ViewData["Title"] = "Criar um novo caminhão";
+}
+
+<h1>Criar um novo caminhão</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="TruckModelDtoId" class="form-label"></label>                
+                @Html.DropDownListFor(x => Model.TruckModelDtoId, new SelectList(Model.ListTruckModelDto, "Id", "TruckModelFormatted"), htmlAttributes: new { @class = "form-control", id = "ddlTruckModel"})
+                <span asp-validation-for="TruckModelDtoId" class="text-danger"></span>
+            </div>            
+            <div class="mb-3">
+                <label asp-for="YearOfManufacture" class="form-label"></label>
+                <input asp-for="YearOfManufacture" class="form-control" min=@DateTime.Now.Year max=@DateTime.Now.Year value=@DateTime.Now.Year />
+                <span asp-validation-for="YearOfManufacture" class="text-danger"></span>
+            </div>            
+
+            <div class="mb-3 form-group text-end">
+                @Html.ActionLink("Voltar", "Index", "Truck" , null,  htmlAttributes: new {@class="btn btn-secondary"})                   
+                <input type="submit" value="Criar" class="btn btn-success" />                
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

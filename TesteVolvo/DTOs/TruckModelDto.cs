@@ -20,6 +20,13 @@ namespace TesteVolvo.DTOs
         [Display(Name = "Ano do Modelo")]
         public int YearOfModel { get; set; }
 
+        public string TruckModelFormatted => this.ToString();
+
+        public override string ToString()
+        {            
+            return $"{YearOfModel}/{BaseTruckModelDto?.Description}";            
+        }
+
         public TruckModelDto() { }
 
         public void AddListBaseTruckModelDto(IEnumerable<BaseTruckModelDto> listBaseTruckModelDto) 

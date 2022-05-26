@@ -18,11 +18,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IBaseTruckModelService, BaseTruckModelService>();
 builder.Services.AddScoped<ITruckModelService, TruckModelService>();
+builder.Services.AddScoped<ITruckService, TruckService>();
+
+builder.Services.AddScoped<IMapperTruckModelService, MapperTruckModelService>();
+builder.Services.AddScoped<IMapperTruckService, MapperTruckService>();
 
 builder.Services.AddScoped<IBaseTruckModelRepository, BaseTruckModelRepository>();
 builder.Services.AddScoped<ITruckModelRepository, TruckModelRepository>();
 builder.Services.AddScoped<ITruckRepository, TruckRepository>();
-builder.Services.AddScoped<IMapperTruckModelService, MapperTruckModelService>();
 
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
 
