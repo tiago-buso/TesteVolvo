@@ -18,7 +18,7 @@ namespace TesteVolvo.DTOs
         public int YearOfManufacture { get; set; }
 
         [Display(Name = "Modelo do caminhão")]
-        public IEnumerable<TruckModelDto> ListTruckModelDto { get; set; }
+        public IEnumerable<TruckModelDto> ListTruckModelDto { get; private set; }
 
         public TruckDto()
         {

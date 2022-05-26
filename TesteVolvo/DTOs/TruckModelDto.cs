@@ -9,7 +9,7 @@ namespace TesteVolvo.DTOs
         public int Id { get; set; }
 
         [Display(Name = "Modelo base")]
-        public IEnumerable<BaseTruckModelDto> ListBaseTruckModelDto { get; set; }   
+        public IEnumerable<BaseTruckModelDto> ListBaseTruckModelDto { get; private set; }   
         
         [Display(Name = "Modelo base")]
         public int BaseTruckModelDtoId { get; set; }
