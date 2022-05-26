@@ -19,7 +19,13 @@ namespace TesteVolvo.Models
         [Column("YearOfModel")]
         public int YearOfModel { get; private set; }
 
-        public ICollection<Truck> Trucks { get; private set; }       
+        public ICollection<Truck> Trucks { get; private set; }
 
+        public TruckModel(int id, BaseTruckModel baseTruckModel, int yearOfModel)
+        {
+            Id = id;
+            BaseTruckModel = baseTruckModel;
+            YearOfModel = yearOfModel;
+        }
     }
 }
