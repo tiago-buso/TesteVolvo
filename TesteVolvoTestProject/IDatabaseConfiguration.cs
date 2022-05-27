@@ -10,7 +10,7 @@ namespace TesteVolvoTestProject
         BaseTruckModelRepository CreateBaseTruckModelRepositoryWithoutData();
         TruckModelRepository CreateTruckModelRepositoryWithData();
         TruckModelRepository CreateTruckModelRepositoryWithoutData();
-        List<BaseTruckModel> GetBaseTruckModels();
-        List<TruckModel> GetTruckModels();
+        TruckRepository CreateTruckRepositoryWithData();
+        TruckRepository CreateTruckRepositoryWithoutData();
     }
 }

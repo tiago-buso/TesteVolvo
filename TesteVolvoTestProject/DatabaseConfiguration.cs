@@ -40,8 +40,7 @@ namespace TesteVolvoTestProject
         public TruckModelRepository CreateTruckModelRepositoryWithData()
         {
             AppDbContext context = new AppDbContext(dbContextOptions);
-            ClearAllData(context);
-            PopulateDataBaseTruckModel(context);
+            ClearAllData(context);           
             PopulateDataTruckModel(context);
             return new TruckModelRepository(context);
         }
@@ -51,6 +50,21 @@ namespace TesteVolvoTestProject
             AppDbContext context = new AppDbContext(dbContextOptions);
             ClearAllData(context);
             return new TruckModelRepository(context);
+        }
+
+        public TruckRepository CreateTruckRepositoryWithData()
+        {
+            AppDbContext context = new AppDbContext(dbContextOptions);
+            ClearAllData(context);
+            PopulateDataTruck(context);             
+            return new TruckRepository(context);
+        }
+
+        public TruckRepository CreateTruckRepositoryWithoutData()
+        {
+            AppDbContext context = new AppDbContext(dbContextOptions);
+            ClearAllData(context);
+            return new TruckRepository(context);
         }
 
         private void ClearAllData(AppDbContext context)
@@ -84,7 +98,19 @@ namespace TesteVolvoTestProject
             context.SaveChanges();
         }
 
-        public List<BaseTruckModel> GetBaseTruckModels()
+        private void PopulateDataTruck(AppDbContext context)
+        {
+            var trucks = GetTrucks();
+
+            foreach (var truck in trucks)
+            {
+                context.Trucks.Add(truck);
+            }
+
+            context.SaveChanges();
+        }
+
+        private List<BaseTruckModel> GetBaseTruckModels()
         {
             List<BaseTruckModel> baseTruckModels = new List<BaseTruckModel>();
 
@@ -94,7 +120,7 @@ namespace TesteVolvoTestProject
             return baseTruckModels;
         }
 
-        public List<TruckModel> GetTruckModels()
+        private List<TruckModel> GetTruckModels()
         {
             List<BaseTruckModel> baseTruckModels = GetBaseTruckModels();
 
@@ -107,6 +133,20 @@ namespace TesteVolvoTestProject
             truckModels.Add(truckModel2);
 
             return truckModels;
+        }
+
+        private List<Truck> GetTrucks()
+        {
+            List<TruckModel> truckModels = GetTruckModels();
+            List<Truck> trucks = new List<Truck>();
+
+            Truck truck = new Truck(truckModels.First(), DateTime.Now.Year);
+            Truck truck2 = new Truck(truckModels.Last(), DateTime.Now.Year);
+
+            trucks.Add(truck);
+            trucks.Add(truck2);
+
+            return trucks;
         }
 
     }

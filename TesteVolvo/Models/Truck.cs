@@ -21,11 +21,21 @@ namespace TesteVolvo.Models
 
         public Truck() { }
 
-        public Truck(int id, TruckModel truckModel, int yearOfManufacture)
-        {
-            Id = id;
+        public Truck(TruckModel truckModel, int yearOfManufacture)
+        {        
             TruckModel = truckModel;
             YearOfManufacture = yearOfManufacture;
+        }
+
+        public Truck(int truckModelId, int yearOfManufacture)
+        {
+            TruckModelId = truckModelId;
+            YearOfManufacture = yearOfManufacture;
+        }
+
+        public void UpdateYearOfManufacture(int year)
+        {
+            YearOfManufacture = year;
         }
 
     }

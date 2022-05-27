@@ -64,7 +64,7 @@ namespace TesteVolvoTestProject
 
         [Fact(DisplayName = "Tentar obter modelo de caminhão por Id do banco em memória, mas não achar")]
         [Trait("TruckModelRepository", "Testes de TruckModelRepository")]
-        public void AcharNenhumModeloBaseCaminhaoBancoEmMemoriaPorId()
+        public void AcharNenhumModeloCaminhaoBancoEmMemoriaPorId()
         {
             // Arrange
             var repository = _databaseConfiguration.CreateTruckModelRepositoryWithData();
@@ -78,7 +78,7 @@ namespace TesteVolvoTestProject
 
         [Fact(DisplayName = "Criar modelo de caminhão no banco em memória")]
         [Trait("TruckModelRepository", "Testes de TruckModelRepository")]
-        public void CriarModeloBaseCaminhaoBancoEmMemoria()
+        public void CriarCaminhaoBancoEmMemoria()
         {
             // Arrange
             var repository = _databaseConfiguration.CreateTruckModelRepositoryWithData();
@@ -101,7 +101,7 @@ namespace TesteVolvoTestProject
 
         [Fact(DisplayName = "Atualizar modelo de caminhão no banco em memória")]
         [Trait("TruckModelRepository", "Testes de TruckModelRepository")]
-        public void AtualizarModeloBaseCaminhaoBancoEmMemoria()
+        public void AtualizarModeloCaminhaoBancoEmMemoria()
         {
             // Arrange
             var repository = _databaseConfiguration.CreateTruckModelRepositoryWithData();
@@ -121,7 +121,7 @@ namespace TesteVolvoTestProject
 
         [Fact(DisplayName = "Deletar modelo de caminhão no banco em memória")]
         [Trait("TruckModelRepository", "Testes de TruckModelRepository")]
-        public void DeletarModeloBaseCaminhaoBancoEmMemoria()
+        public void DeletarModeloCaminhaoBancoEmMemoria()
         {
             // Arrange
             var repository = _databaseConfiguration.CreateTruckModelRepositoryWithData();
