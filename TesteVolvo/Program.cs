@@ -20,6 +20,7 @@ builder.Services.AddScoped<IBaseTruckModelService, BaseTruckModelService>();
 builder.Services.AddScoped<ITruckModelService, TruckModelService>();
 builder.Services.AddScoped<ITruckService, TruckService>();
 
+builder.Services.AddScoped<IMapperBaseTruckModelService, MapperBaseTruckModelService>();
 builder.Services.AddScoped<IMapperTruckModelService, MapperTruckModelService>();
 builder.Services.AddScoped<IMapperTruckService, MapperTruckService>();
 

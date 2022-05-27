@@ -21,11 +21,30 @@ namespace TesteVolvo.Models
 
         public ICollection<Truck> Trucks { get; private set; }
 
+        public TruckModel() { }
+
+        public TruckModel(BaseTruckModel baseTruckModel, int yearOfModel)
+        {          
+            BaseTruckModel = baseTruckModel;
+            YearOfModel = yearOfModel;
+        }
+
+        public TruckModel(int baseTruckModelId, int yearOfModel)
+        {          
+            BaseTruckModelId = baseTruckModelId;
+            YearOfModel = yearOfModel;
+        }
+
         public TruckModel(int id, BaseTruckModel baseTruckModel, int yearOfModel)
         {
             Id = id;
             BaseTruckModel = baseTruckModel;
             YearOfModel = yearOfModel;
+        }
+
+        public void UpdateYearOfModel(int year)
+        {
+            YearOfModel = year;
         }
     }
 }

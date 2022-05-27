@@ -14,12 +14,12 @@ namespace TesteVolvo.Data
 
         public IEnumerable<TruckModel> GetAllTruckModels()
         {
-            return _context.TruckModels.AsNoTracking().Include("BaseTruckModel").ToList();
+            return _context.TruckModels.Include("BaseTruckModel").ToList();
         }
 
         public TruckModel GetTruckModelById(int id)
         {
-            var truckModel = _context.TruckModels.AsNoTracking().Include("BaseTruckModel").FirstOrDefault(x => x.Id == id);
+            var truckModel = _context.TruckModels.Include("BaseTruckModel").FirstOrDefault(x => x.Id == id);
             if (truckModel != null)
             {
                 _context.Entry(truckModel).State = EntityState.Detached;
@@ -44,6 +44,7 @@ namespace TesteVolvo.Data
                 throw new ArgumentNullException(nameof(truckModel));
             }
 
+            _context.Attach(truckModel).State = EntityState.Modified;
             _context.TruckModels.Update(truckModel);
         }
 
@@ -54,6 +55,7 @@ namespace TesteVolvo.Data
 
         public void DeleteTruckModel(TruckModel truckModel)
         {
+            _context.Entry(truckModel).State = EntityState.Deleted;
             _context.TruckModels.Remove(truckModel);
         }
     }

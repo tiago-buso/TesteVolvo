@@ -1,11 +1,6 @@
 ﻿using FluentAssertions;
-using Moq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TesteVolvo.Data;
 using TesteVolvo.Models;
 using Xunit;
 
@@ -13,87 +8,132 @@ namespace TesteVolvoTestProject
 {
     public class TruckModelRepositoryTest
     {
-        private List<BaseTruckModel> GetBaseTruckModels()
+        private readonly IDatabaseConfiguration _databaseConfiguration;
+
+        public TruckModelRepositoryTest(IDatabaseConfiguration databaseConfiguration)
         {
-            List<BaseTruckModel> baseTruckModels = new List<BaseTruckModel>();
+            _databaseConfiguration = databaseConfiguration;
+        }            
 
-            baseTruckModels.Add(new BaseTruckModel { Id = 1, Description = "AA" });
-            baseTruckModels.Add(new BaseTruckModel { Id = 2, Description = "BB" });
-
-            return baseTruckModels;
-        }
-
-        private List<TruckModel> GetTruckModels()
-        {
-            List<BaseTruckModel> baseTruckModels = GetBaseTruckModels();
-
-            List<TruckModel> truckModels = new List<TruckModel>();
-
-            TruckModel truckModel = new TruckModel(1, baseTruckModels.First(), DateTime.Now.Year);            
-
-            TruckModel truckModel2 = new TruckModel(2, baseTruckModels.Last(), DateTime.Now.Year);
-
-            truckModels.Add(truckModel);
-            truckModels.Add(truckModel2);
-
-            return truckModels;
-        }
-
-        [Fact(DisplayName = "Simular para obter todos os modelos de caminhão")]
+        [Fact(DisplayName = "Obter todos os modelos de caminhão do banco em memória")]
         [Trait("TruckModelRepository", "Testes de TruckModelRepository")]
-        public void ObterTodosModelosCaminhao()
+        public void ObterTodosModelosCaminhaoBancoEmMemoria()
         {
             // Arrange
-            Moq.Mock<ITruckModelRepository> mockTruckModelRepository = new Moq.Mock<ITruckModelRepository>();
-            mockTruckModelRepository.Setup(x => x.GetAllTruckModels()).Returns(GetTruckModels());
+            var repository = _databaseConfiguration.CreateTruckModelRepositoryWithData();
 
-            //Act
-            var truckModels = mockTruckModelRepository.Object.GetAllTruckModels();
+            // Act
+            var listTruckModels = repository.GetAllTruckModels();
 
             // Assert
-            truckModels.Should().NotBeNull();
-            truckModels.Should().HaveCount(2);
-            mockTruckModelRepository.Verify(r => r.GetAllTruckModels(), Times.Once);
+            listTruckModels.Should().NotBeNull();
+            listTruckModels.Should().HaveCount(2);
+            listTruckModels.First().BaseTruckModel.Should().NotBeNull();
         }
 
-        [Fact(DisplayName = "Simular para obter modelo de caminhão por id")]
+        [Fact(DisplayName = "Tentar obter todos os modelos de caminhão do banco em memória, mas não acha nenhum")]
         [Trait("TruckModelRepository", "Testes de TruckModelRepository")]
-        public void ObterModeloCaminhaoPorId()
+        public void AcharNenhumModeloCaminhaoBancoEmMemoria()
         {
             // Arrange
-            int id = 1;
-            TruckModel truckModel = GetTruckModels().First(x => x.Id == id);
+            var repository = _databaseConfiguration.CreateTruckModelRepositoryWithoutData();
 
-            Moq.Mock<ITruckModelRepository> mockTruckModelRepository = new Moq.Mock<ITruckModelRepository>();
-            mockTruckModelRepository.Setup(x => x.GetTruckModelById(id)).Returns(truckModel);
-
-            //Act
-            var truckModelMock = mockTruckModelRepository.Object.GetTruckModelById(id);
+            // Act
+            var listTruckModels = repository.GetAllTruckModels();
 
             // Assert
-            truckModelMock.Should().NotBeNull();
-            truckModelMock.Id.Should().Be(id);
-            mockTruckModelRepository.Verify(r => r.GetTruckModelById(id), Times.Once);
+            listTruckModels.Should().BeEmpty();
         }
 
-        [Fact(DisplayName = "Simular para não conseguir obter modelo de caminhão por id")]
+        [Fact(DisplayName = "Obter modelo de caminhão por Id do banco em memória")]
         [Trait("TruckModelRepository", "Testes de TruckModelRepository")]
-        public void ObterModeloCaminhaoPorIdMasNaoTemElementoComEsseId()
+        public void ObterModeloCaminhaoPorIdBancoEmMemoria()
         {
             // Arrange
-            int id = 10;
-            TruckModel truckModel = GetTruckModels().FirstOrDefault(x => x.Id == id);
+            var repository = _databaseConfiguration.CreateTruckModelRepositoryWithData();
 
-            Moq.Mock<ITruckModelRepository> mockTruckModelRepository = new Moq.Mock<ITruckModelRepository>();
-            mockTruckModelRepository.Setup(x => x.GetTruckModelById(id)).Returns(truckModel);
-
-            //Act
-            var baseTruckModelMock = mockTruckModelRepository.Object.GetTruckModelById(id);
+            // Act
+            var truckModel = repository.GetTruckModelById(1);
 
             // Assert
-            baseTruckModelMock.Should().BeNull();
-            mockTruckModelRepository.Verify(r => r.GetTruckModelById(id), Times.Once);
+            truckModel.Should().NotBeNull();
+            truckModel.Id.Should().Be(1);
+            truckModel.BaseTruckModel.Should().NotBeNull();
+            truckModel.BaseTruckModel.Description.Should().Be("AA");
         }
-     
+
+        [Fact(DisplayName = "Tentar obter modelo de caminhão por Id do banco em memória, mas não achar")]
+        [Trait("TruckModelRepository", "Testes de TruckModelRepository")]
+        public void AcharNenhumModeloBaseCaminhaoBancoEmMemoriaPorId()
+        {
+            // Arrange
+            var repository = _databaseConfiguration.CreateTruckModelRepositoryWithData();
+
+            // Act
+            var truckModel = repository.GetTruckModelById(10);
+
+            // Assert
+            truckModel.Should().BeNull();
+        }
+
+        [Fact(DisplayName = "Criar modelo de caminhão no banco em memória")]
+        [Trait("TruckModelRepository", "Testes de TruckModelRepository")]
+        public void CriarModeloBaseCaminhaoBancoEmMemoria()
+        {
+            // Arrange
+            var repository = _databaseConfiguration.CreateTruckModelRepositoryWithData();
+            var baseModelrepository = _databaseConfiguration.CreateBaseTruckModelRepositoryWithData();
+
+            var baseTruckModelId = baseModelrepository.GetAllBaseTruckModels().First().Id;
+            var newTruckModel = new TruckModel(baseTruckModelId, DateTime.Now.Year);
+
+            int oldCount = repository.GetAllTruckModels().Count();
+
+            // Act
+            repository.CreateTruckModel(newTruckModel);
+            bool created = repository.SaveChanges();
+
+            // Assert
+            var listTruckModel = repository.GetAllTruckModels();
+            listTruckModel.Should().HaveCount(oldCount + 1);
+            created.Should().BeTrue();
+        }
+
+        [Fact(DisplayName = "Atualizar modelo de caminhão no banco em memória")]
+        [Trait("TruckModelRepository", "Testes de TruckModelRepository")]
+        public void AtualizarModeloBaseCaminhaoBancoEmMemoria()
+        {
+            // Arrange
+            var repository = _databaseConfiguration.CreateTruckModelRepositoryWithData();
+            var truckModel = repository.GetTruckModelById(1);
+
+            // Act
+            truckModel.UpdateYearOfModel(DateTime.Now.AddYears(30).Year);
+            repository.UpdateTruckModel(truckModel);
+            var updated = repository.SaveChanges();
+
+            // Assert
+            var truckModelUpdated = repository.GetTruckModelById(1);
+            truckModelUpdated.YearOfModel.Should().Be(DateTime.Now.AddYears(30).Year);
+            updated.Should().BeTrue();
+        }
+
+
+        [Fact(DisplayName = "Deletar modelo de caminhão no banco em memória")]
+        [Trait("TruckModelRepository", "Testes de TruckModelRepository")]
+        public void DeletarModeloBaseCaminhaoBancoEmMemoria()
+        {
+            // Arrange
+            var repository = _databaseConfiguration.CreateTruckModelRepositoryWithData();
+            var truckModel = repository.GetTruckModelById(1);           
+
+            // Act            
+            repository.DeleteTruckModel(truckModel);
+            var deleted = repository.SaveChanges();
+
+            // Assert                     
+            deleted.Should().BeTrue();         
+        }
+
     }
 }

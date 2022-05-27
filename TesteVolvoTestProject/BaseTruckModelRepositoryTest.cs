@@ -1,79 +1,76 @@
 ﻿using FluentAssertions;
-using Moq;
-using System.Collections.Generic;
-using System.Linq;
-using TesteVolvo.Data;
-using TesteVolvo.Models;
 using Xunit;
 
 namespace TesteVolvoTestProject
 {
     public class BaseTruckModelRepositoryTest
     {
-        private List<BaseTruckModel> GetBaseTruckModels()
+
+        private readonly IDatabaseConfiguration _databaseConfiguration;
+
+        public BaseTruckModelRepositoryTest(IDatabaseConfiguration databaseConfiguration)
         {
-            List<BaseTruckModel> baseTruckModels = new List<BaseTruckModel>();
+            _databaseConfiguration = databaseConfiguration;
+        }       
 
-            baseTruckModels.Add(new BaseTruckModel { Id = 1, Description = "AA" });
-            baseTruckModels.Add(new BaseTruckModel { Id = 2, Description = "BB" });
-
-            return baseTruckModels;
-        }
-
-        [Fact(DisplayName = "Simular para obter todos os modelos base de caminhão")]
+        [Fact(DisplayName = "Obter todos os modelos base de caminhão do banco em memória")]
         [Trait("BaseTruckModelRepository", "Testes de BaseTruckModelRepository")]
-        public void ObterTodosModelosBaseCaminhao()
+        public void ObterTodosModelosBaseCaminhaoBancoEmMemoria()
         {
             // Arrange
-            Moq.Mock<IBaseTruckModelRepository> mockBaseTruckModelRepository = new Moq.Mock<IBaseTruckModelRepository>();
-            mockBaseTruckModelRepository.Setup(x => x.GetAllBaseTruckModels()).Returns(GetBaseTruckModels());    
+            var repository = _databaseConfiguration.CreateBaseTruckModelRepositoryWithData();
 
-            //Act
-            var baseTruckModels = mockBaseTruckModelRepository.Object.GetAllBaseTruckModels();
+            // Act
+            var listBaseTruckModels = repository.GetAllBaseTruckModels();
 
             // Assert
-            baseTruckModels.Should().NotBeNull();
-            baseTruckModels.Should().HaveCount(2);
-            mockBaseTruckModelRepository.Verify(r => r.GetAllBaseTruckModels(), Times.Once);
+            listBaseTruckModels.Should().NotBeNull();
+            listBaseTruckModels.Should().HaveCount(2);
         }
 
-        [Fact(DisplayName = "Simular para obter modelo base de caminhão por id")]
+        [Fact(DisplayName = "Tentar obter todos os modelos base de caminhão do banco em memória, mas não acha nenhum")]
         [Trait("BaseTruckModelRepository", "Testes de BaseTruckModelRepository")]
-        public void ObterModeloBaseCaminhaoPorId()
+        public void AcharNenhumModeloBaseCaminhaoBancoEmMemoria()
         {
             // Arrange
-            int id = 1;
-            BaseTruckModel baseTruckModel = GetBaseTruckModels().First(x => x.Id == id);
+            var repository = _databaseConfiguration.CreateBaseTruckModelRepositoryWithoutData();
 
-            Moq.Mock<IBaseTruckModelRepository> mockBaseTruckModelRepository = new Moq.Mock<IBaseTruckModelRepository>();
-            mockBaseTruckModelRepository.Setup(x => x.GetBaseTruckModelById(id)).Returns(baseTruckModel);
-
-            //Act
-            var baseTruckModelMock = mockBaseTruckModelRepository.Object.GetBaseTruckModelById(id);
+            // Act
+            var listBaseTruckModels = repository.GetAllBaseTruckModels();
 
             // Assert
-            baseTruckModelMock.Should().NotBeNull();
-            baseTruckModelMock.Id.Should().Be(id);
-            mockBaseTruckModelRepository.Verify(r => r.GetBaseTruckModelById(id), Times.Once);           
+            listBaseTruckModels.Should().BeEmpty();     
         }
 
-        [Fact(DisplayName = "Simular para não conseguir obter modelo base de caminhão por id")]
+        [Fact(DisplayName = "Obter modelo base de caminhão por Id do banco em memória")]
         [Trait("BaseTruckModelRepository", "Testes de BaseTruckModelRepository")]
-        public void ObterModeloBaseCaminhaoPorIdMasNaoTemElementoComEsseId()
+        public void ObterModeloBaseCaminhaoPorIdBancoEmMemoria()
         {
             // Arrange
-            int id = 10;
-            BaseTruckModel baseTruckModel = GetBaseTruckModels().FirstOrDefault(x => x.Id == id);
+            var repository = _databaseConfiguration.CreateBaseTruckModelRepositoryWithData();
 
-            Moq.Mock<IBaseTruckModelRepository> mockBaseTruckModelRepository = new Moq.Mock<IBaseTruckModelRepository>();
-            mockBaseTruckModelRepository.Setup(x => x.GetBaseTruckModelById(id)).Returns(baseTruckModel);
-
-            //Act
-            var baseTruckModelMock = mockBaseTruckModelRepository.Object.GetBaseTruckModelById(id);
+            // Act
+            var baseTruckModel = repository.GetBaseTruckModelById(1);
 
             // Assert
-            baseTruckModelMock.Should().BeNull();            
-            mockBaseTruckModelRepository.Verify(r => r.GetBaseTruckModelById(id), Times.Once);
+            baseTruckModel.Should().NotBeNull();
+            baseTruckModel.Id.Should().Be(1);
+            baseTruckModel.Description.Should().Be("AA");
+        }
+
+        [Fact(DisplayName = "Tentar obter modelo base de caminhão por Id do banco em memória, mas não achar")]
+        [Trait("BaseTruckModelRepository", "Testes de BaseTruckModelRepository")]
+        public void AcharNenhumModeloBaseCaminhaoBancoEmMemoriaPorId()
+        {
+            // Arrange
+            var repository = _databaseConfiguration.CreateBaseTruckModelRepositoryWithData();
+
+            // Act
+            var baseTruckModel = repository.GetBaseTruckModelById(10);
+
+            // Assert
+            baseTruckModel.Should().BeNull();            
         }
     }
 }
+
