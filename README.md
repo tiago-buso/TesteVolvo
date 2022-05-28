@@ -16,3 +16,8 @@ Para isso:
 2 - acessar o Nuget Package Manager (Tools > Nuget Package Manager > Package Manager Console)
 3 - no campo Default Project, selecionar o projeto TesteVolvo
 4 - executar o comando Update-Database
+
+
+Feito isso, basta acessar o sistema e tentar cadastrar modelos de caminhões e caminhões.
+
+Os modelos base já foram incluídos no banco via migrations.
