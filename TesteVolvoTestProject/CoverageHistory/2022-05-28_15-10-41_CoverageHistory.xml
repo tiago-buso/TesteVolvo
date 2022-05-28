@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<coverage version="1.0" date="2022-05-28_15-10-41" tag="">
+  <assembly name="TesteVolvo">
+    <class name="AspNetCoreGeneratedDocument.Views__ViewStart" coveredlines="0" coverablelines="1" totallines="3" coveredbranches="0" totalbranches="0" coveredcodeelements="0" totalcodeelements="1" />
+    <class name="AspNetCoreGeneratedDocument.Views_Home_Index" coveredlines="0" coverablelines="1" totallines="9" coveredbranches="0" totalbranches="0" coveredcodeelements="0" totalcodeelements="1" />
+    <class name="AspNetCoreGeneratedDocument.Views_Shared__Layout" coveredlines="0" coverablelines="7" totallines="53" coveredbranches="0" totalbranches="20" coveredcodeelements="0" totalcodeelements="2" />
+    <class name="AspNetCoreGeneratedDocument.Views_Shared_Error" coveredlines="0" coverablelines="5" totallines="25" coveredbranches="0" totalbranches="2" coveredcodeelements="0" totalcodeelements="1" />
+    <class name="AspNetCoreGeneratedDocument.Views_Truck_Create" coveredlines="0" coverablelines="10" totallines="40" coveredbranches="0" totalbranches="14" coveredcodeelements="0" totalcodeelements="3" />
+    <class name="AspNetCoreGeneratedDocument.Views_Truck_Delete" coveredlines="0" coverablelines="7" totallines="37" coveredbranches="0" totalbranches="4" coveredcodeelements="0" totalcodeelements="2" />
+    <class name="AspNetCoreGeneratedDocument.Views_Truck_Details" coveredlines="0" coverablelines="7" totallines="29" coveredbranches="0" totalbranches="0" coveredcodeelements="0" totalcodeelements="1" />
+    <class name="AspNetCoreGeneratedDocument.Views_Truck_Edit" coveredlines="0" coverablelines="11" totallines="41" coveredbranches="0" totalbranches="16" coveredcodeelements="0" totalcodeelements="3" />
+    <class name="AspNetCoreGeneratedDocument.Views_Truck_Index" coveredlines="0" coverablelines="16" totallines="63" coveredbranches="0" totalbranches="18" coveredcodeelements="0" totalcodeelements="1" />
+    <class name="AspNetCoreGeneratedDocument.Views_TruckModels_Create" coveredlines="0" coverablelines="10" totallines="40" coveredbranches="0" totalbranches="14" coveredcodeelements="0" totalcodeelements="3" />
+    <class name="AspNetCoreGeneratedDocument.Views_TruckModels_Delete" coveredlines="0" coverablelines="7" totallines="37" coveredbranches="0" totalbranches="4" coveredcodeelements="0" totalcodeelements="2" />
+    <class name="AspNetCoreGeneratedDocument.Views_TruckModels_Details" coveredlines="0" coverablelines="7" totallines="29" coveredbranches="0" totalbranches="0" coveredcodeelements="0" totalcodeelements="1" />
+    <class name="AspNetCoreGeneratedDocument.Views_TruckModels_Edit" coveredlines="0" coverablelines="11" totallines="41" coveredbranches="0" totalbranches="16" coveredcodeelements="0" totalcodeelements="3" />
+    <class name="AspNetCoreGeneratedDocument.Views_TruckModels_Index" coveredlines="0" coverablelines="16" totallines="63" coveredbranches="0" totalbranches="18" coveredcodeelements="0" totalcodeelements="1" />
+    <class name="Program" coveredlines="0" coverablelines="28" totallines="52" coveredbranches="0" totalbranches="2" coveredcodeelements="0" totalcodeelements="1" />
+    <class name="TesteVolvo.Controllers.Base.BaseControllerWithMessages" coveredlines="0" coverablelines="29" totallines="52" coveredbranches="0" totalbranches="4" coveredcodeelements="0" totalcodeelements="5" />
+    <class name="TesteVolvo.Controllers.HomeController" coveredlines="0" coverablelines="10" totallines="27" coveredbranches="0" totalbranches="4" coveredcodeelements="0" totalcodeelements="3" />
+    <class name="TesteVolvo.Controllers.TruckController" coveredlines="0" coverablelines="170" totallines="282" coveredbranches="0" totalbranches="30" coveredcodeelements="0" totalcodeelements="11" />
+    <class name="TesteVolvo.Controllers.TruckModelsController" coveredlines="0" coverablelines="175" totallines="289" coveredbranches="0" totalbranches="32" coveredcodeelements="0" totalcodeelements="11" />
+    <class name="TesteVolvo.Data.AppDbContext" coveredlines="6" coverablelines="6" totallines="17" coveredbranches="0" totalbranches="0" coveredcodeelements="4" totalcodeelements="4" />
+    <class name="TesteVolvo.Data.BaseTruckModelRepository" coveredlines="15" coverablelines="15" totallines="32" coveredbranches="2" totalbranches="2" coveredcodeelements="3" totalcodeelements="3" />
+    <class name="TesteVolvo.Data.TruckModelRepository" coveredlines="35" coverablelines="35" totallines="62" coveredbranches="6" totalbranches="6" coveredcodeelements="7" totalcodeelements="7" />
+    <class name="TesteVolvo.Data.TruckRepository" coveredlines="38" coverablelines="38" totallines="68" coveredbranches="6" totalbranches="6" coveredcodeelements="8" totalcodeelements="8" />
+    <class name="TesteVolvo.DTOs.BaseTruckModelDto" coveredlines="2" coverablelines="2" totallines="8" coveredbranches="0" totalbranches="0" coveredcodeelements="2" totalcodeelements="2" />
+    <class name="TesteVolvo.DTOs.TruckDto" coveredlines="31" coverablelines="31" totallines="59" coveredbranches="11" totalbranches="12" coveredcodeelements="9" totalcodeelements="9" />
+    <class name="TesteVolvo.DTOs.TruckModelDto" coveredlines="37" coverablelines="37" totallines="67" coveredbranches="15" totalbranches="16" coveredcodeelements="11" totalcodeelements="11" />
+    <class name="TesteVolvo.Migrations.AppDbContextModelSnapshot" coveredlines="0" coverablelines="97" totallines="124" coveredbranches="0" totalbranches="0" coveredcodeelements="0" totalcodeelements="1" />
+    <class name="TesteVolvo.Migrations.MigrationInicial" coveredlines="0" coverablelines="167" totallines="217" coveredbranches="0" totalbranches="0" coveredcodeelements="0" totalcodeelements="3" />
+    <class name="TesteVolvo.Models.BaseTruckModel" coveredlines="2" coverablelines="3" totallines="20" coveredbranches="0" totalbranches="0" coveredcodeelements="2" totalcodeelements="3" />
+    <class name="TesteVolvo.Models.ErrorViewModel" coveredlines="0" coverablelines="2" totallines="9" coveredbranches="0" totalbranches="0" coveredcodeelements="0" totalcodeelements="2" />
+    <class name="TesteVolvo.Models.Truck" coveredlines="24" coverablelines="24" totallines="49" coveredbranches="0" totalbranches="0" coveredcodeelements="9" totalcodeelements="9" />
+    <class name="TesteVolvo.Models.TruckModel" coveredlines="24" coverablelines="25" totallines="50" coveredbranches="0" totalbranches="0" coveredcodeelements="9" totalcodeelements="10" />
+    <class name="TesteVolvo.Profiles.BaseTruckModelProfile" coveredlines="5" coverablelines="5" totallines="17" coveredbranches="0" totalbranches="0" coveredcodeelements="1" totalcodeelements="1" />
+    <class name="TesteVolvo.Profiles.TruckModelProfile" coveredlines="9" coverablelines="9" totallines="22" coveredbranches="0" totalbranches="0" coveredcodeelements="1" totalcodeelements="1" />
+    <class name="TesteVolvo.Profiles.TruckProfile" coveredlines="9" coverablelines="9" totallines="22" coveredbranches="0" totalbranches="0" coveredcodeelements="1" totalcodeelements="1" />
+    <class name="TesteVolvo.Services.BaseTruckModelService" coveredlines="13" coverablelines="13" totallines="33" coveredbranches="0" totalbranches="0" coveredcodeelements="3" totalcodeelements="3" />
+    <class name="TesteVolvo.Services.MapperBaseTruckModelService" coveredlines="22" coverablelines="31" totallines="61" coveredbranches="5" totalbranches="8" coveredcodeelements="5" totalcodeelements="7" />
+    <class name="TesteVolvo.Services.MapperTruckModelService" coveredlines="31" coverablelines="31" totallines="61" coveredbranches="7" totalbranches="8" coveredcodeelements="7" totalcodeelements="7" />
+    <class name="TesteVolvo.Services.MapperTruckService" coveredlines="31" coverablelines="31" totallines="61" coveredbranches="7" totalbranches="8" coveredcodeelements="7" totalcodeelements="7" />
+    <class name="TesteVolvo.Services.TruckModelService" coveredlines="41" coverablelines="41" totallines="78" coveredbranches="6" totalbranches="6" coveredcodeelements="7" totalcodeelements="7" />
+    <class name="TesteVolvo.Services.TruckService" coveredlines="37" coverablelines="37" totallines="71" coveredbranches="6" totalbranches="6" coveredcodeelements="6" totalcodeelements="6" />
+  </assembly>
+</coverage>

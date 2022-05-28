@@ -41,21 +41,6 @@ namespace TesteVolvo.Services
         private bool CheckIfExistsBaseTruckModel(BaseTruckModel baseTruckModel)
         {
             return baseTruckModel != null;
-        }
-
-        public BaseTruckModel ConvertBaseTruckModelDtoInBaseTruckModel(BaseTruckModelDto baseTruckModelDto)
-        {
-            if (CheckIfExistsBaseTruckModelDto(baseTruckModelDto))
-            {
-                return _mapper.Map<BaseTruckModel>(baseTruckModelDto);
-            }
-
-            return null;
-        }
-
-        private bool CheckIfExistsBaseTruckModelDto(BaseTruckModelDto baseTruckModelDto)
-        {
-            return baseTruckModelDto != null;
-        }
+        }       
     }
 }
