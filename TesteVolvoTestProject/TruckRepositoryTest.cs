@@ -105,6 +105,20 @@ namespace TesteVolvoTestProject
             created.Should().BeTrue();
         }
 
+        [Fact(DisplayName = "Tentar criar registro de caminhão no banco em memória, mas passo nulo e forço exceção")]
+        [Trait("TruckRepository", "Testes de TruckRepository")]
+        public void TentarCriarCaminhaoBancoEmMemoriaException()
+        {
+            // Arrange
+            var repository = _databaseConfiguration.CreateTruckRepositoryWithoutData();            
+
+            // Act
+            Action act = () => repository.CreateTruck(null);                      
+
+            // Assert            
+            act.Should().Throw<ArgumentNullException>();          
+        }
+
         [Fact(DisplayName = "Atualizar registro de caminhão no banco em memória")]
         [Trait("TruckRepository", "Testes de TruckRepository")]
         public void AtualizarCaminhaoBancoEmMemoria()
@@ -124,6 +138,19 @@ namespace TesteVolvoTestProject
             updated.Should().BeTrue();
         }
 
+        [Fact(DisplayName = "Tentar atualizar registro de caminhão no banco em memória, mas passo nulo e forço exceção")]
+        [Trait("TruckRepository", "Testes de TruckRepository")]
+        public void TentarAtualizarCaminhaoBancoEmMemoriaException()
+        {
+            // Arrange
+            var repository = _databaseConfiguration.CreateTruckRepositoryWithoutData();
+
+            // Act
+            Action act = () => repository.UpdateTruck(null);
+
+            // Assert            
+            act.Should().Throw<ArgumentNullException>();
+        }
 
         [Fact(DisplayName = "Deletar registro de caminhão no banco em memória")]
         [Trait("TruckRepository", "Testes de TruckRepository")]
