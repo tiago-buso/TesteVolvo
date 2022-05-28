@@ -90,16 +90,16 @@ namespace TesteVolvoTestProject
             IBaseTruckModelService baseTruckModelService = new BaseTruckModelService(mockBaseTruckModelRepository.Object, mapperBaseTruckModelService);
 
             // Act
-            var baseTruckModels = baseTruckModelService.GetBaseTruckModelById(1);
+            var baseTruckModel = baseTruckModelService.GetBaseTruckModelById(1);
 
             // Assert
-            baseTruckModels.Should().NotBeNull();   
-            baseTruckModels.GetType().Should().Be(typeof(BaseTruckModelDto));
+            baseTruckModel.Should().NotBeNull();   
+            baseTruckModel.GetType().Should().Be(typeof(BaseTruckModelDto));
         }
 
         [Fact(DisplayName = "Tentar obter modelo base de caminhão por id, mas não achar nada e o auto mapper retornar null")]
         [Trait("BaseTruckModelService", "Testes de BaseTruckModelService")]
-        public void TentarObterTodosModeloBaseCaminhaoPorIdAcharNadaERetornaNull()
+        public void TentarObterModeloBaseCaminhaoPorIdAcharNadaERetornaNull()
         {
             // Arrange            
             Moq.Mock<IBaseTruckModelRepository> mockBaseTruckModelRepository = new Moq.Mock<IBaseTruckModelRepository>();           
@@ -109,10 +109,10 @@ namespace TesteVolvoTestProject
             IBaseTruckModelService baseTruckModelService = new BaseTruckModelService(mockBaseTruckModelRepository.Object, mapperBaseTruckModelService);
 
             // Act
-            var listBaseTruckModels = baseTruckModelService.GetBaseTruckModelById(11);
+            var baseTruckModel = baseTruckModelService.GetBaseTruckModelById(11);
 
             // Assert
-            listBaseTruckModels.Should().BeNull();
+            baseTruckModel.Should().BeNull();
         }
 
     }

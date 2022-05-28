@@ -140,5 +140,35 @@ namespace TesteVolvoTestProject
             // Assert                     
             deleted.Should().BeTrue();
         }
+
+
+        [Fact(DisplayName = "Obter quantidade de camimnhões que tenha um determinado Id")]
+        [Trait("TruckRepository", "Testes de TruckRepository")]
+        public void ObterQuantidadeCaminhoesPorTruckModelId()
+        {
+            // Arrange
+            var repository = _databaseConfiguration.CreateTruckRepositoryWithData();           
+
+            // Act            
+            var qtde = repository.GetCountOfTrucksWithSpecificTruckModel(1);
+
+            // Assert            
+            qtde.Should().BeGreaterThanOrEqualTo(1);      
+        }
+
+
+        [Fact(DisplayName = "Obter quantidade de camimnhões que tenha um determinado Id que não exista")]
+        [Trait("TruckRepository", "Testes de TruckRepository")]
+        public void ObterQuantidadeCaminhoesPorTruckModelIdMasNaoExisteNenhum()
+        {
+            // Arrange
+            var repository = _databaseConfiguration.CreateTruckRepositoryWithData();
+
+            // Act            
+            var qtde = repository.GetCountOfTrucksWithSpecificTruckModel(100);
+
+            // Assert            
+            qtde.Should().Be(0);
+        }
     }
 }

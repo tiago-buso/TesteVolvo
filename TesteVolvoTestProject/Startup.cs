@@ -13,8 +13,7 @@ namespace TesteVolvoTestProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IDatabaseConfiguration, DatabaseConfiguration>();
-            services.AddTransient<IFakeObjects, FakeObjects>();
-            //services.AddTransient<IMapperBaseTruckModelService, MapperBaseTruckModelService>();          
+            services.AddTransient<IFakeObjects, FakeObjects>();            
         }
     }
 }
