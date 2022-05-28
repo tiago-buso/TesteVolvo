@@ -80,7 +80,7 @@ namespace TesteVolvoTestProject
             listTruckModels.Should().BeNull();
         }
 
-        [Fact(DisplayName = "Obter modelos de caminhão por id de um objeto fake e fazer a conversão deles via auto mapper")]
+        [Fact(DisplayName = "Obter modelo de caminhão por id de um objeto fake e fazer a conversão dele via auto mapper")]
         [Trait("TruckModelService", "Testes de TruckModelService")]
         public void ObterModeloCaminhaoPorId()
         {
