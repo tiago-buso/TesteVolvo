@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TesteVolvo.Services;
 
 namespace TesteVolvoTestProject
 {
@@ -11,7 +12,9 @@ namespace TesteVolvoTestProject
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IDatabaseConfiguration, DatabaseConfiguration>();            
+            services.AddTransient<IDatabaseConfiguration, DatabaseConfiguration>();
+            services.AddTransient<IFakeObjects, FakeObjects>();
+            //services.AddTransient<IMapperBaseTruckModelService, MapperBaseTruckModelService>();          
         }
     }
 }

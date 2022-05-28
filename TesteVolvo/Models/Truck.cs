@@ -33,6 +33,13 @@ namespace TesteVolvo.Models
             YearOfManufacture = yearOfManufacture;
         }
 
+        public Truck(int id, TruckModel truckModel, int yearOfManufacture)
+        {
+            Id = id;
+            TruckModel = truckModel;
+            YearOfManufacture = yearOfManufacture;
+        }
+
         public void UpdateYearOfManufacture(int year)
         {
             YearOfManufacture = year;
